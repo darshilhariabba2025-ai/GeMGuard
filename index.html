@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SendaTender | SIH 26100</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark senda-logo">ST</div><span>Senda<span>Tender</span></span></div>
+      <p class="sih">SIH 2026 · PS 26100</p>
+      <nav id="nav">
+        <button data-view="home" class="active"><i>⌂</i> Overview</button>
+        <button data-view="vendor"><i>↑</i> Vendor Portal</button>
+        <button data-view="officer"><i>♙</i> Officer Portal</button>
+      </nav>
+      <div class="sidebar-note"><b>Prototype mode</b><br>All government checks and AI outputs are simulated for demonstration.</div>
+    </aside>
+    <main>
+      <header><button class="menu" id="menu">☰</button><div><span class="eyebrow">PROCUREMENT DOCUMENT REVIEW</span><h1 id="page-title">Tender compliance workspace</h1></div><div class="profile"><select id="language" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option></select><button id="theme-toggle" class="theme-toggle" title="Switch theme">☾</button><div class="avatar">DO</div><span>Demo Officer</span></div></header>
+
+      <section class="view active" id="home">
+        <div class="hero"><div><span class="pill blue">SIH 2026 · Problem Statement 26100</span><h2>Review tender documents<br>in one workspace.</h2><p>SendaTender helps a vendor upload tender and eligibility documents together. The system classifies files, runs prototype checks, creates a compliance report, and sends the package to an officer for review.</p><div class="hero-actions"><button class="primary" data-go="vendor">Upload package <b>→</b></button><button class="secondary" data-go="officer">Open officer desk</button></div></div><div class="hero-image"><img src="tender-workflow-illustration.png" alt="Procurement officer reviewing a tender compliance dashboard" /></div></div>
+        <div class="stats"><article><span>ACTIVE BIDDERS</span><b id="stat-bidders">4</b><small>+1 this week</small></article><article><span>AVG. COMPLIANCE</span><b id="stat-score">89%</b><small>Across submitted packages</small></article><article><span>READY TO REVIEW</span><b id="stat-review">2</b><small>Awaiting officer decision</small></article></div>
+        <div class="feature-grid"><article><div class="icon blue-bg">1</div><h3>Vendor submission</h3><p>Upload NIT/RFP, BOQ, GST, PAN, Udyam, ITR, bank proof, and technical documents in one package.</p></article><article><div class="icon mint-bg">2</div><h3>Automated screening</h3><p>The prototype identifies documents, checks required items, calculates compliance, and explains failed checks.</p></article><article><div class="icon orange-bg">3</div><h3>Officer decision</h3><p>Officers view the report, bidder history, and audit trail before approving, requesting review, or flagging a bidder.</p></article></div>
+      </section>
+
+      <section class="view" id="vendor">
+        <div class="section-heading"><div><span class="eyebrow">VENDOR PORTAL</span><h2>Submit your tender & vendor package</h2><p>Upload the tender documents and your vendor compliance documents together, or add each file individually. Your data stays in this browser for this demo.</p></div><span class="pill amber">Prototype · mock integrations</span></div>
+        <div class="steps"><span class="done">1 <b>Upload</b></span><i></i><span id="step2">2 <b>Verify</b></span><i></i><span id="step3">3 <b>Ready for review</b></span></div>
+        <div class="upload-layout">
+          <div class="upload-main"><div class="upload-guide"><b>What to upload</b><span><strong>1. Tender documents</strong> — NIT/RFP, tender notice, specifications, BOQ</span><span><strong>2. Vendor documents</strong> — GST, PAN, Udyam/MSME, ITR, bank proof, technical proposal</span></div><div id="dropzone" class="dropzone"><input id="bulk-input" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" /><div class="upload-icon">↑</div><h3>Upload tender & vendor documents</h3><p>Select the complete package in one go, or <label for="bulk-input">browse files</label></p><small>PDF, JPG, PNG, DOC · Max 20 files · No data leaves your browser</small></div><div class="or"><span>OR</span></div><div class="individual"><div><h3>Add an individual document</h3><p>Choose the document type, then select its file.</p></div><select id="doc-type"><option value="Auto-detect">Auto-detect document type</option><option>Tender / NIT / RFP</option><option>BOQ / Technical Specification</option><option>GST Registration Certificate</option><option>PAN Card</option><option>Udyam Registration</option><option>Income Tax Return</option><option>Bank Account Proof</option><option>MSME Certificate</option><option>Technical Proposal</option></select><label class="outline-button">Choose file<input id="single-input" type="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" hidden></label></div></div>
+        <div class="documents-card"><div class="card-top"><div><h3>Your documents <span id="file-count">0 files</span></h3><p>AI classification will run when verification starts.</p></div><button id="verify" class="primary" disabled>Start AI verification <b>→</b></button></div><div id="file-list" class="file-list"><div class="empty">Your uploaded documents will appear here.</div></div></div>
+        <div id="report" class="report hidden"></div>
+      </section>
+
+      <section class="view" id="officer">
+        <div class="section-heading"><div><span class="eyebrow">OFFICER PORTAL</span><h2>Bidder review desk</h2><p>Review AI-prepared compliance records and capture a clear decision trail.</p></div><button id="seed" class="secondary">Reset demo data</button></div>
+        <div class="filters"><label class="search">⌕ <input id="search" placeholder="Search bidder, GSTIN or package…"></label><select id="status-filter"><option value="All">All statuses</option><option>Ready for review</option><option>Approved</option><option>Flagged</option><option>Needs review</option></select><select id="risk-filter"><option value="All">All risk levels</option><option>Low</option><option>Medium</option><option>High</option></select></div>
+        <div class="officer-layout"><div class="table-card"><table><thead><tr><th>BIDDER</th><th>PACKAGE</th><th>COMPLIANCE</th><th>RISK</th><th>STATUS</th></tr></thead><tbody id="bidder-list"></tbody></table></div><aside class="review-panel" id="review-panel"><div class="empty">Select a bidder to view the verification record.</div></aside></div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    // Refined labels for the tender-and-vendor package workflow.
+    const originalTypeFor = typeFor;
+    typeFor = function(name, forced) {
+      if (forced && forced !== 'Auto-detect') return forced;
+      const lower = name.toLowerCase();
+      if (lower.includes('tender') || lower.includes('nit') || lower.includes('rfp')) return 'Tender / NIT / RFP';
+      if (lower.includes('boq') || lower.includes('specification')) return 'BOQ / Technical Specification';
+      return originalTypeFor(name, forced);
+    };
+    $('#verify').onclick = () => {
+      const names = files.map(file => file.name.toLowerCase());
+      const found = term => names.some(name => name.includes(term));
+      const issues = [];
+      if (!found('gst')) issues.push('GST verification failed');
+      if (!found('pan')) issues.push('PAN verification failed');
+      const score = Math.max(62, Math.min(98, 78 + files.length * 2 - issues.length * 6));
+      const risk = score >= 90 ? 'Low' : score >= 75 ? 'Medium' : 'High';
+      $('#step2').classList.add('done'); $('#step3').classList.add('done');
+      $('#report').classList.remove('hidden');
+      $('#report').innerHTML = `<div class="report-top"><div class="score-ring" style="--score:${score * 3.6}deg"><b>${score}%</b></div><div><h3>AI verification report <span class="risk ${risk.toLowerCase()}">${risk} risk</span></h3><p>Simulated OCR, cross-document matching, and mock government validation completed.</p></div><button class="secondary download" id="download">Download report</button></div><div class="report-grid"><div><h3>Extracted & checked</h3><div class="check-item"><span class="ok">✓</span> ${files.length} documents classified and indexed</div><div class="check-item"><span class="ok">✓</span> GSTIN format and PAN linkage <small>(mock API)</small></div><div class="check-item"><span class="ok">✓</span> Tender requirements indexed <small>(prototype)</small></div></div><div><h3>Review attention</h3>${issues.length ? issues.map(issue => `<div class="check-item"><span class="warn">!</span> ${issue}</div>`).join('') : '<div class="check-item"><span class="ok">✓</span> No material discrepancies detected</div>'}<div class="check-item"><span class="warn">!</span> Government integrations are mock/prototype checks</div></div></div>`;
+      $('#download').onclick = downloadReport;
+      toast('Verification complete — report is ready for review');
+      $('#report').scrollIntoView({behavior:'smooth', block:'nearest'});
+    };
+    // A verified vendor upload becomes a record in the officer's review desk.
+    $('#verify').addEventListener('click', () => {
+      if (!files.length) return;
+      const names = files.map(file => file.name.toLowerCase());
+      const has = text => names.some(name => name.includes(text));
+      const flags = [];
+      if (!has('gst')) flags.push('GST verification failed');
+      if (!has('pan')) flags.push('PAN verification failed');
+      const score = Math.max(62, Math.min(98, 78 + files.length * 2 - flags.length * 6));
+      const risk = score >= 90 ? 'Low' : score >= 75 ? 'Medium' : 'High';
+      bidders = bidders.filter(bidder => bidder.id !== 'current-upload');
+      bidders.unshift({ id:'current-upload', name:'Your uploaded vendor package', gst:has('gst') ? 'GST verification passed (mock)' : 'GST verification failed', package:'Tender package upload', score, risk, status:'Ready for review', docs:files.length, updated:'Just now', flags, audit:['Package submitted · Just now', 'AI verification completed · Just now'] });
+      save();
+      renderBidders();
+    });
+  </script>
+  <style>
+    .brand span span { color:#148d7d; }
+    .brand-mark { width:34px; height:34px; border-radius:11px; background:#173c51; display:flex; align-items:flex-end; justify-content:center; gap:3px; padding:8px 7px; transform:rotate(-4deg); }
+    .brand-mark i { display:block; width:5px; height:9px; border-radius:5px; background:#72dcc1; }
+    .brand-mark i:nth-child(2) { height:17px; background:#f5c568; }
+    .brand-mark i:nth-child(3) { height:13px; }
+    .upload-guide { margin-bottom:14px; border-radius:9px; padding:12px 14px; background:#f4faf9; border:1px solid #d7eeea; display:grid; gap:5px; color:#58727b; font-size:11px; line-height:1.4; }
+    .upload-guide b { color:#177d70; font-size:11px; letter-spacing:.4px; text-transform:uppercase; }
+    .upload-guide strong { color:#2e4d5e; }
+  </style>
+  <script>
+    // SIH showcase features: explainable compliance, document watch list, and tamper-evident review references.
+    function complianceRows(record) {
+      const gstFail = record.flags.some(flag => flag.toLowerCase().includes('gst'));
+      const panFail = record.flags.some(flag => flag.toLowerCase().includes('pan'));
+      return [
+        ['GST registration', !gstFail, gstFail ? 'GST verification failed — upload a current GST certificate with a readable GSTIN.' : 'GSTIN format and registration matched (mock check).'],
+        ['PAN linkage', !panFail, panFail ? 'PAN details could not be matched against the supplied documents.' : 'PAN and vendor identity matched across documents.'],
+        ['Udyam / MSME', true, 'Registry number structure validated (mock check).'],
+        ['Income-tax filing', true, 'Latest return appears available in the package (mock check).'],
+        ['Tender eligibility', record.score >= 75, record.score >= 75 ? 'Required tender documents have been indexed.' : 'Manual officer review is required before eligibility can be confirmed.'],
+        ['Blacklist screening', true, 'No result returned by the mock screening service.']
+      ];
+    }
+    const priorSelectBidder = window.selectBidder;
+    window.selectBidder = function(id) {
+      priorSelectBidder(id);
+      const record = bidders.find(item => item.id === id);
+      if (!record) return;
+      const rows = complianceRows(record);
+      const hash = 'AUD-' + id.replace(/[^a-z0-9]/gi, '').slice(-8).toUpperCase() + '-' + record.score + 'C';
+      $('#review-panel').insertAdjacentHTML('beforeend', `<section class="trust-panel"><h4>COMPLIANCE CHECKLIST</h4>${rows.map(([label, pass, explanation]) => `<details class="check-detail"><summary><span class="${pass ? 'ok' : 'warn'}">${pass ? '✓' : '!'}</span> ${label}<small>${pass ? 'Passed' : 'Needs attention'}</small></summary><p>${explanation}</p></details>`).join('')}<div class="expiry-watch"><b>Document watch</b><span>Expiry monitoring is enabled in prototype mode. No expiry dates are read from uploaded files in this local demo.</span></div><div class="audit-proof"><span class="proof-mark">✓</span><div><b>Tamper-evident audit reference</b><small>${hash} · Hash-chained prototype record</small></div></div><div class="public-badge"><div class="qr-art">▦</div><div><b>Public verification badge</b><small>Prototype QR reference for this compliance record</small></div></div></section>`);
+    };
+    $('#verify').addEventListener('click', () => {
+      if (!files.length) return;
+      const names = files.map(file => file.name.toLowerCase());
+      const expiryHint = names.some(name => name.includes('expiry') || name.includes('expired'));
+      $('#report').insertAdjacentHTML('beforeend', `<div class="explain-box"><div><span class="eyebrow">EXPLAINABLE DECISION</span><h3>Why this package received its score</h3><p>The score reflects document completeness, successful mock identity checks, and tender-package coverage. Open the bidder record in Officer Portal for each individual check.</p></div><div class="expiry-chip ${expiryHint ? 'attention' : ''}">${expiryHint ? '!' : '✓'} ${expiryHint ? 'Possible expiry date found — officer review needed' : 'No document-expiry warning detected'}</div></div>`);
+    });
+  </script>
+  <style>
+    .trust-panel{margin-top:18px;border-top:1px solid #e8edf0;padding-top:15px}.trust-panel h4{font-size:10px;letter-spacing:.85px;color:#748895;margin:0 0 8px}.check-detail{border-bottom:1px solid #edf1f3;padding:8px 0}.check-detail summary{list-style:none;cursor:pointer;font-size:12px;font-weight:700}.check-detail summary::-webkit-details-marker{display:none}.check-detail summary small{float:right;font-weight:700;color:#758694}.check-detail p{font-size:11px;color:#70818e;line-height:1.45;margin:7px 0 2px 20px}.expiry-watch,.audit-proof,.public-badge{margin-top:12px;border-radius:8px;padding:10px;font-size:11px;display:flex;gap:9px}.expiry-watch{display:grid;background:#fff7e8;color:#826d3b}.expiry-watch span{color:#8b7d62}.audit-proof{background:#edf8f5;align-items:center;color:#327268}.audit-proof small,.public-badge small{display:block;color:#66847d;margin-top:2px}.proof-mark{font-size:18px;color:#19a47d}.public-badge{background:#f1f5ff;align-items:center;color:#375b8f}.qr-art{width:30px;height:30px;border-radius:4px;background:#385d92;color:white;display:grid;place-items:center;font-size:20px}.explain-box{margin-top:20px;border-top:1px solid #e5eaed;padding-top:18px;display:flex;justify-content:space-between;gap:16px}.explain-box h3{margin:5px 0}.explain-box p{max-width:620px;font-size:12px;line-height:1.5}.expiry-chip{align-self:center;background:#e7f7f2;color:#168d71;padding:9px;border-radius:8px;font-size:11px;font-weight:700}.expiry-chip.attention{background:#fff1d9;color:#b17414}@media(max-width:650px){.explain-box{display:grid}.expiry-chip{justify-self:start}}
+  </style>
+  <div id="officer-lock" class="officer-lock hidden" role="dialog" aria-modal="true"><div class="lock-card"><div class="lock-icon">⌑</div><span class="eyebrow">RESTRICTED WORKSPACE</span><h2>Officer verification</h2><p>Enter the demo officer passkey to access bidder records and decisions.</p><input id="officer-key" type="password" placeholder="Enter passkey" autocomplete="off" /><button id="unlock-officer" class="primary">Unlock workspace →</button><small id="lock-message">Demo passkey: <b>OFFICER2026</b></small></div></div>
+  <script>
+    const performanceHistory = {
+      v1:{completed:'18 of 19',onTime:'94%',status:'Strong performer',projects:['Solar pump supply · Completed early','School equipment supply · Completed on time','Road safety equipment · Active, on schedule']},
+      v2:{completed:'9 of 12',onTime:'75%',status:'Watch list',projects:['Drainage materials · Delayed 14 days','Electrical fittings · Completed on time','Municipal IT supply · Active, milestone due']},
+      v3:{completed:'26 of 26',onTime:'100%',status:'Excellent performer',projects:['Water works spares · Completed early','Workshop equipment · Completed on time','Health supplies · Completed on time']},
+      v4:{completed:'5 of 10',onTime:'60%',status:'High attention',projects:['Stationery contract · Delayed 28 days','Safety signage · Closed with remarks','IT peripherals · Cancelled after review']}
+    };
+    const selectWithHistory = window.selectBidder;
+    window.selectBidder = function(id) {
+      selectWithHistory(id);
+      const history = performanceHistory[id] || {completed:'First recorded submission',onTime:'—',status:'No past tender history',projects:['This vendor record was created from the current uploaded package.']};
+      $('#review-panel').insertAdjacentHTML('beforeend', `<section class="history-panel"><h4>BIDDER PERFORMANCE HISTORY</h4><div class="history-stats"><div><b>${history.completed}</b><small>tenders completed</small></div><div><b>${history.onTime}</b><small>on-time completion</small></div><div><b>${history.status}</b><small>performance status</small></div></div><div class="past-list"><b>Recent tender activity</b>${history.projects.map(project => `<span>• ${project}</span>`).join('')}</div></section>`);
+    };
+    const lock = $('#officer-lock');
+    function requestOfficerAccess(){ if (sessionStorage.getItem('bidbloom-officer') !== 'yes') lock.classList.remove('hidden'); }
+    $$('[data-view="officer"],[data-go="officer"]').forEach(button => button.addEventListener('click', requestOfficerAccess));
+    $('#unlock-officer').onclick = () => {
+      if ($('#officer-key').value === 'OFFICER2026') { sessionStorage.setItem('bidbloom-officer','yes'); lock.classList.add('hidden'); $('#officer-key').value=''; toast('Officer workspace unlocked'); }
+      else { $('#lock-message').textContent = 'Incorrect passkey. Try OFFICER2026 for this demo.'; $('#lock-message').classList.add('bad-key'); }
+    };
+    $('#officer-key').addEventListener('keydown', event => { if(event.key === 'Enter') $('#unlock-officer').click(); });
+  </script>
+  <style>
+    .history-panel{border-top:1px solid #e8edf0;margin-top:18px;padding-top:15px}.history-panel h4{font-size:10px;letter-spacing:.85px;color:#748895;margin:0 0 9px}.history-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.history-stats div{background:#f5f8fb;border-radius:7px;padding:8px}.history-stats b{font-size:13px;display:block;color:#294b62}.history-stats small{font-size:9px;color:#748794;display:block;margin-top:3px}.past-list{margin-top:11px;display:grid;gap:5px;font-size:11px;color:#647986}.past-list b{color:#375269}.officer-lock{position:fixed;inset:0;background:#15374bc4;z-index:20;display:grid;place-items:center;padding:20px}.lock-card{width:min(390px,100%);background:#fff;border-radius:16px;padding:32px;text-align:center;box-shadow:0 20px 55px #122a3a66}.lock-icon{width:45px;height:45px;margin:0 auto 15px;border-radius:14px;display:grid;place-items:center;background:#e5f7f1;color:#148d74;font-size:25px}.lock-card h2{margin:7px 0}.lock-card p{color:#718290;line-height:1.5;font-size:13px}.lock-card input{width:100%;border:1px solid #d9e2e7;border-radius:8px;padding:12px;margin:10px 0;font:inherit;outline-color:#2267f2}.lock-card button{width:100%}.lock-card small{display:block;color:#718492;margin-top:14px;font-size:11px}.bad-key{color:#c74c59!important}.hidden{display:none!important}@media(max-width:650px){.history-stats{grid-template-columns:1fr}.lock-card{padding:25px}}
+  </style>
+  <script>
+    const practicalTitles = {home:'Tender compliance workspace', vendor:'Upload tender and vendor documents', officer:'Officer review desk'};
+    $$('[data-view]').forEach(button => button.addEventListener('click', () => { $('#page-title').textContent = practicalTitles[button.dataset.view]; }));
+    $$('[data-go]').forEach(button => button.addEventListener('click', () => { $('#page-title').textContent = practicalTitles[button.dataset.go]; }));
+  </script>
+  <script>
+    const themeButton = $('#theme-toggle');
+    const languageMenu = $('#language');
+    function setTheme(mode) { document.body.classList.toggle('dark-mode', mode === 'dark'); themeButton.textContent = mode === 'dark' ? '☀' : '☾'; localStorage.setItem('sendatender-theme', mode); }
+    setTheme(localStorage.getItem('sendatender-theme') || 'light');
+    themeButton.onclick = () => setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+    const hindi = { 'Tender compliance workspace':'टेंडर अनुपालन कार्यक्षेत्र', 'Upload tender and vendor documents':'टेंडर और विक्रेता दस्तावेज़ अपलोड करें', 'Officer review desk':'अधिकारी समीक्षा डेस्क', 'Upload package':'पैकेज अपलोड करें', 'Open officer desk':'अधिकारी डेस्क खोलें', 'Vendor Portal':'विक्रेता पोर्टल', 'Officer Portal':'अधिकारी पोर्टल', 'Overview':'अवलोकन' };
+    languageMenu.onchange = () => {
+      const isHindi = languageMenu.value === 'hi';
+      $$('button, h1, h2, h3, p, span, small, b').forEach(element => { if (!element.dataset.en) element.dataset.en = element.textContent.trim(); const source = element.dataset.en; if (isHindi && hindi[source]) element.textContent = hindi[source]; else if (!isHindi) element.textContent = source; });
+      localStorage.setItem('sendatender-language', languageMenu.value);
+    };
+    languageMenu.value = localStorage.getItem('sendatender-language') || 'en';
+  </script>
+  <style>
+    .senda-logo{font-family:Georgia,serif;font-style:italic;font-size:14px!important;letter-spacing:-2px;transform:rotate(-8deg)!important;background:linear-gradient(145deg,#155e75,#21a18f)!important;color:#fff!important;padding:0!important;display:grid!important;place-items:center!important}.hero-image{width:410px;align-self:stretch;min-height:280px;overflow:hidden;border-radius:15px;box-shadow:0 16px 30px #31576e1c;background:#e9f4f7}.hero-image img{width:100%;height:100%;object-fit:cover;display:block}.theme-toggle{border:1px solid #dce5eb;background:#f6f9fb;color:#36576e;width:34px;height:34px;border-radius:50%;font-size:17px}.profile select{border:1px solid #dce5eb;border-radius:7px;padding:7px;background:#fff;color:#516a7d;font:inherit;font-size:12px}.dark-mode{--ink:#e8f0f4;--muted:#aebdc8;--line:#2a4051;--pale:#1b2b37;background:#12212c;color:var(--ink)}.dark-mode body,.dark-mode{background:#12212c}.dark-mode .sidebar,.dark-mode header,.dark-mode .stats article,.dark-mode .feature-grid article,.dark-mode .documents-card,.dark-mode .upload-main,.dark-mode .table-card,.dark-mode .review-panel,.dark-mode .report,.dark-mode .hero-card{background:#192c39;border-color:#2b4658}.dark-mode .hero{background:linear-gradient(110deg,#1d3448,#193e41)}.dark-mode .dropzone,.dark-mode .individual select,.dark-mode .filters select,.dark-mode .search,.dark-mode .profile select{background:#1a303e;color:#dce8ee;border-color:#385367}.dark-mode .or span{background:#192c39}.dark-mode th{background:#1b303d}.dark-mode tr:hover td{background:#203947}.dark-mode .upload-guide{background:#193a39;border-color:#28645c;color:#bdd4d0}.dark-mode .upload-guide strong{color:#e1f1ef}.dark-mode .theme-toggle{background:#253b4b;border-color:#3a5668;color:#f3ca68}.dark-mode .vendor-name input{background:#1a303e;color:#e2eef3}@media(max-width:900px){.hero-image{width:330px}}@media(max-width:650px){.hero-image{width:100%;height:230px;margin-top:25px}.profile select{display:none}}
+  </style>
+</body>
+</html>
